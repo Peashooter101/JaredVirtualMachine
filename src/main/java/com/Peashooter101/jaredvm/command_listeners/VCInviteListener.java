@@ -1,19 +1,22 @@
 package com.Peashooter101.jaredvm.command_listeners;
 
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.GuildVoiceState;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+
 public class VCInviteListener extends ListenerAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger(VCInviteListener.class);
+    private static final HashMap<Member, Request> vcRequests = new HashMap<>();
+    private static final long INVITE_TIMEOUT = 30000L;
 
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
@@ -37,13 +40,7 @@ public class VCInviteListener extends ListenerAdapter {
         // NPE Checks
         assert invitee != null;
         assert inviter != null;
-        if (guild == null) {
-            String response = "ERROR " + inviter.getAsMention() + ": Guild not Found (VCInviteListener)";
-            event.getHook().sendMessage(response).queue();
-            logger.error(event.getUser().getName() + " issued command but failed: Guild not Found.");
-            return;
-        }
-        //
+        assert guild != null;
 
         // Inviting Yourself
         if (invitee.equals(inviter)) {
@@ -99,11 +96,65 @@ public class VCInviteListener extends ListenerAdapter {
             return;
         }
 
-        // TODO: Placeholder Functionality
-        guild.moveVoiceMember(invitee, inviterVC).queue();
+        // Handle old requests...
+        if (vcRequests.containsKey(invitee)) {
+            Request request = vcRequests.get(invitee);
+            long timeElapsed = System.currentTimeMillis() - request.time;
+            // If the request is still fresh...
+            if (timeElapsed <= INVITE_TIMEOUT) {
+                String response = "Hey " + inviter.getAsMention() + ", " + invitee.getUser().getName() + " has a request pending, please try again later!";
+                event.getHook().sendMessage(response).queue();
+                logger.info(event.getUser().getName() + " issued command but failed: Invitee already has a request pending (" + invitee.getUser().getName() + ").");
+                return;
+            }
+            // Remove old request and edit the old message.
+            vcRequests.remove(invitee);
+            String response = "This request from " + request.inviter.getUser().getName() + " sent to " + invitee.getUser().getName() + " has expired.";
+            // request.message.editMessage(response).queue();
+            logger.info(request.inviter.getUser().getName() + " issued command but failed: Invite expired (" + request.inviter.getUser().getName() + " -> " + invitee.getUser().getName() + " for " + request.channel.getName() + ").");
+        }
+        vcRequests.put(invitee, new Request(null,System.currentTimeMillis(), inviterVC, inviter));
+        String promptInvite = invitee.getAsMention() + ", " + inviter.getUser().getName() + " is inviting you to join " + inviterVC.getName() + "!";
+        event.getHook().sendMessage(promptInvite).addActionRow(
+                Button.success("vc-invite-join", "Join VC"),
+                Button.danger("vc-invite-deny", "Deny Request")
+        ).queue();
         logger.info(event.getUser().getName() + " issued command: Invite " + invitee.getUser().getName() + " to " + inviterVC.getName());
-        String response = "Moved " + invitee.getAsMention() + " into " + inviterVC.getName();
-        event.getHook().sendMessage(response).queue();
+    }
+
+    @Override
+    public void onButtonInteraction(ButtonInteractionEvent event) {
+        if (!event.getComponentId().equals("vc-invite-join") && !event.getComponentId().equals("vc-invite-deny")) { return; }
+        Member member = event.getMember();
+        if (member == null) { return; }
+        if (!vcRequests.containsKey(member)) { return; }
+        //if (!vcRequests.get(member).message.equals(event.getMessage())) { return; }
+        Request request = vcRequests.get(member);
+        long timeElapsed = System.currentTimeMillis() - request.time;
+        // TODO: Make time configurable.
+        // If the request timed out...
+        if (timeElapsed > INVITE_TIMEOUT) {
+            String response = "Oops sorry " + event.getUser().getAsMention() + ", your request timed out! Ask for another one from " + request.inviter.getUser().getName();
+            event.editMessage(response).setActionRows().queue();
+            logger.info(request.inviter.getUser().getName() + " issued command but failed: Invite expired (" + request.inviter.getUser().getName() + " -> " + member.getUser().getName() + " for " + request.channel.getName() + ").");
+            vcRequests.remove(member);
+            return;
+        }
+        // If denied...
+        if (event.getComponentId().equals("vc-invite-deny")) {
+            String response = "Hey " + request.inviter.getAsMention() + ", " + member.getUser().getName() + " has denied your request to join " + request.channel.getName() + "!";
+            event.editMessage(response).setActionRows().queue();
+            logger.info(request.inviter.getUser().getName() + " issued command but failed: Invite expired (" + request.inviter.getUser().getName() + " -> " + member.getUser().getName() + " for " + request.channel.getName() + ").");
+            vcRequests.remove(member);
+            return;
+        }
+        // If accepted...
+        Guild guild = request.channel.getGuild();
+        guild.moveVoiceMember(member, request.channel).queue();
+        logger.info(event.getUser().getName() + " accepted invite from " + request.inviter.getUser().getName() + " to " + request.channel.getName());
+        String response = "Hey " + request.inviter.getUser().getName() + ", I moved " + member.getUser().getName() + " into " + request.channel.getName();
+        event.editMessage(response).setActionRows().queue();
+        vcRequests.remove(member);
     }
 
     private static boolean isNotUserAccount(@NotNull Member member) {
@@ -123,6 +174,24 @@ public class VCInviteListener extends ListenerAdapter {
 
     private static boolean hasVCPermission(@NotNull Member member, @NotNull VoiceChannel vc) {
         return member.hasAccess(vc);
+    }
+
+    /**
+     * Private Inner Class to pass information from
+     * the invite to the button interactions.
+     */
+    private class Request {
+        final Message message;
+        final long time;
+        final VoiceChannel channel;
+        final Member inviter;
+
+        Request(Message msg, long time, VoiceChannel channel, Member inviter) {
+            this.message = msg;
+            this.time = time;
+            this.channel = channel;
+            this.inviter = inviter;
+        }
     }
 
 }

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class JaredVMReadyListener extends ListenerAdapter {
 
-    Logger logger = LoggerFactory.getLogger(JaredVMReadyListener.class);
+    private static final Logger logger = LoggerFactory.getLogger(JaredVMReadyListener.class);
 
     @Override
     public void onReady(@NotNull ReadyEvent event) {
@@ -26,8 +26,9 @@ public class JaredVMReadyListener extends ListenerAdapter {
     private static void loadGuildCommands() {
         SnowflakeCacheView<Guild> guilds = JaredVM.getApi().getGuildCache();
         for (Guild g : guilds) {
-            g.updateCommands().addCommands(
-                    Commands.slash("vc-invite", "Invite a user to a private VC")
+            logger.debug("Updating Commands for Guild: " + g.getName());
+            g.updateCommands()
+                    .addCommands(Commands.slash("vc-invite", "Invite a user to a private VC")
                             .addOption(OptionType.USER, "user", "The user to invite (Must already be in a VC).")
             ).queue();
         }
