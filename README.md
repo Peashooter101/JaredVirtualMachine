@@ -1,5 +1,7 @@
 # JaredVirtualMachine
 
+![stability shield](https://img.shields.io/badge/stability-not-red) ![usability shield](https://img.shields.io/badge/usability-prob_not-orange)
+
 ### Why Jared Virtual Machine?
 
 You see, I had a dream... That I could stop abandoning projects as soon as I started them...
