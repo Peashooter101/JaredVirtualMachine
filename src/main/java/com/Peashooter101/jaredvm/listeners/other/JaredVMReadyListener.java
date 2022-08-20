@@ -1,7 +1,8 @@
-package com.Peashooter101.jaredvm.other_listeners;
+package com.Peashooter101.jaredvm.listeners.other;
 
 import com.Peashooter101.jaredvm.JaredVM;
-import com.Peashooter101.jaredvm.command_listeners.VCInviteListener;
+import com.Peashooter101.jaredvm.listeners.command.CmdTestListener;
+import com.Peashooter101.jaredvm.listeners.command.VCInviteListener;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -19,7 +20,7 @@ public class JaredVMReadyListener extends ListenerAdapter {
     @Override
     public void onReady(@NotNull ReadyEvent event) {
         loadGuildCommands();
-        JaredVM.getApi().addEventListener(new VCInviteListener());
+        addEventListeners();
         logger.info("onReady Event Completed, Application Ready!");
     }
 
@@ -29,9 +30,16 @@ public class JaredVMReadyListener extends ListenerAdapter {
             logger.debug("Updating Commands for Guild: " + g.getName());
             g.updateCommands()
                     .addCommands(Commands.slash("vc-invite", "Invite a user to a private VC")
-                            .addOption(OptionType.USER, "user", "The user to invite (Must already be in a VC).")
-            ).queue();
+                            .addOption(OptionType.USER, "user", "The user to invite (Must already be in a VC).", true),
+                    Commands.slash("cmd-test", "Used for messing with slash commands.")
+                            .addOption(OptionType.USER, "user", "User"))
+            .queue();
         }
+    }
+
+    private static void addEventListeners() {
+        JaredVM.getApi().addEventListener(new VCInviteListener());
+        JaredVM.getApi().addEventListener(new CmdTestListener());
     }
 
 }

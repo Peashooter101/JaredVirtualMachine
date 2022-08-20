@@ -1,7 +1,7 @@
 package com.Peashooter101.jaredvm;
 
-import com.Peashooter101.jaredvm.message_listeners.PingPongListener;
-import com.Peashooter101.jaredvm.other_listeners.JaredVMReadyListener;
+import com.Peashooter101.jaredvm.listeners.message.PingPongListener;
+import com.Peashooter101.jaredvm.listeners.other.JaredVMReadyListener;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;

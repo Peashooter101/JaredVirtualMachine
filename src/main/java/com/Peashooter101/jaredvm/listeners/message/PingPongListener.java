@@ -1,4 +1,4 @@
-package com.Peashooter101.jaredvm.message_listeners;
+package com.Peashooter101.jaredvm.listeners.message;
 
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
