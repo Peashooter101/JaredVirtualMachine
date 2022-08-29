@@ -38,3 +38,7 @@ Oh also, the name "Jared Virtual Machine" is a play on Java Virtual Machine so y
 
 `/abby <get/add/remove/gallery>`
 - Need more commands for usability without shutting down the bot!
+
+`/valorant <valorantId>`
+- Access Tracker.gg API or Riot REST API to pull generalized tracker stats.
+- Subcommand for specific matches from match history.
