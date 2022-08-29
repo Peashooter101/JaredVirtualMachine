@@ -39,21 +39,21 @@ public class VCInviteListener extends ListenerAdapter {
         if (invitee.equals(inviter)) {
             String response = "Hey " + inviter.getAsMention() + ", you cannot invite yourself!";
             event.reply(response).setEphemeral(true).queue();
-            logger.info(event.getUser().getName() + " issued command but failed: Invited themself.");
+            logger.debug(event.getUser().getName() + " issued command but failed: Invited themself.");
             return;
         }
 
         if (isNotUserAccount(invitee)) {
             String response = "Hey " + inviter.getAsMention() + ", " + invitee.getAsMention() + " isn't a normal user.";
             event.reply(response).setEphemeral(true).queue();
-            logger.info(event.getUser().getName() + " issued command but failed: Invited Admin / Bot Account (" + invitee.getUser().getName() + ").");
+            logger.debug(event.getUser().getName() + " issued command but failed: Invited Admin / Bot Account (" + invitee.getUser().getName() + ").");
             return;
         }
 
         if (isNotUserAccount(inviter)) {
             String response = "Hey " + inviter.getAsMention() + ", you are not a normal user...";
             event.reply(response).setEphemeral(true).queue();
-            logger.info(event.getUser().getName() + " issued command but failed: User is Admin / Bot Account.");
+            logger.debug(event.getUser().getName() + " issued command but failed: User is Admin / Bot Account.");
             return;
         }
 
@@ -62,14 +62,14 @@ public class VCInviteListener extends ListenerAdapter {
         if (inviterVC == null) {
             String response = "Hey " + inviter.getAsMention() + ", you are not in a Voice Channel...";
             event.reply(response).setEphemeral(true).queue();
-            logger.info(event.getUser().getName() + " issued command but failed: Not in a Voice Channel.");
+            logger.debug(event.getUser().getName() + " issued command but failed: Not in a Voice Channel.");
             return;
         }
 
         if (!hasVCPermission(inviter, inviterVC)) {
             String response = "Hey " + inviter.getAsMention() + ", you cannot invite them! You do not have permission to join this Voice Channel...";
             event.reply(response).setEphemeral(true).queue();
-            logger.info(event.getUser().getName() + " issued command but failed: User does not have access to this Voice Channel (" + inviterVC.getName() + ").");
+            logger.debug(event.getUser().getName() + " issued command but failed: User does not have access to this Voice Channel (" + inviterVC.getName() + ").");
             return;
         }
 
@@ -78,14 +78,14 @@ public class VCInviteListener extends ListenerAdapter {
         if (inviteeVC == null) {
             String response = "Hey " + inviter.getAsMention() + ", " + invitee.getUser().getName() + " is not in a Voice Channel right now...";
             event.reply(response).setEphemeral(true).queue();
-            logger.info(event.getUser().getName() + " issued command but failed: Invitee is not in a Voice Channel (" + invitee.getUser().getName() + ").");
+            logger.debug(event.getUser().getName() + " issued command but failed: Invitee is not in a Voice Channel (" + invitee.getUser().getName() + ").");
             return;
         }
 
         if (inviteeVC.equals(inviterVC)) {
             String response = "Hey " + inviter.getAsMention() + ", you are already in a Voice Channel with them.";
             event.reply(response).setEphemeral(true).queue();
-            logger.info(event.getUser().getName() + " issued command but failed: Both members are already in the same Voice Channel (" + invitee.getUser().getName() + ", " + inviterVC.getName() + ").");
+            logger.debug(event.getUser().getName() + " issued command but failed: Both members are already in the same Voice Channel (" + invitee.getUser().getName() + ", " + inviterVC.getName() + ").");
             return;
         }
 
@@ -99,7 +99,7 @@ public class VCInviteListener extends ListenerAdapter {
             if (timeElapsed <= INVITE_TIMEOUT) {
                 String response = "Hey " + inviter.getAsMention() + ", " + invitee.getUser().getName() + " has a request pending, please try again later!";
                 event.reply(response).setEphemeral(true).queue();
-                logger.info(event.getUser().getName() + " issued command but failed: Invitee already has a request pending (" + invitee.getUser().getName() + ").");
+                logger.debug(event.getUser().getName() + " issued command but failed: Invitee already has a request pending (" + invitee.getUser().getName() + ").");
                 return;
             }
 
@@ -107,7 +107,7 @@ public class VCInviteListener extends ListenerAdapter {
             vcRequests.remove(invitee);
             String response = "This request from " + request.inviter.getUser().getName() + " sent to " + invitee.getUser().getName() + " has expired.";
             request.hook.editOriginal(response).queue();
-            logger.info(request.inviter.getUser().getName() + " issued command but failed: Invite expired (" + request.inviter.getUser().getName() + " -> " + invitee.getUser().getName() + " for " + request.channel.getName() + ").");
+            logger.debug(request.inviter.getUser().getName() + " issued command but failed: Invite expired (" + request.inviter.getUser().getName() + " -> " + invitee.getUser().getName() + " for " + request.channel.getName() + ").");
         }
 
         vcRequests.put(invitee, new Request(event.getHook(), System.currentTimeMillis(), inviterVC, inviter));
@@ -118,7 +118,7 @@ public class VCInviteListener extends ListenerAdapter {
                 Button.danger("vc-invite-deny", "Deny Request")
         ).queue();
 
-        logger.info(event.getUser().getName() + " issued command: Invite " + invitee.getUser().getName() + " to " + inviterVC.getName());
+        logger.debug(event.getUser().getName() + " issued command: Invite " + invitee.getUser().getName() + " to " + inviterVC.getName());
     }
 
     @Override
@@ -143,7 +143,7 @@ public class VCInviteListener extends ListenerAdapter {
         if (timeElapsed > INVITE_TIMEOUT) {
             String response = "Oops sorry " + event.getUser().getAsMention() + ", your request timed out! Ask for another one from " + request.inviter.getUser().getName();
             event.editMessage(response).setActionRows().queue();
-            logger.info(request.inviter.getUser().getName() + " issued command but failed: Invite expired (" + request.inviter.getUser().getName() + " -> " + member.getUser().getName() + " for " + request.channel.getName() + ").");
+            logger.debug(request.inviter.getUser().getName() + " issued command but failed: Invite expired (" + request.inviter.getUser().getName() + " -> " + member.getUser().getName() + " for " + request.channel.getName() + ").");
             vcRequests.remove(member);
             return;
         }
@@ -152,7 +152,7 @@ public class VCInviteListener extends ListenerAdapter {
         if (event.getComponentId().equals("vc-invite-deny")) {
             String response = "Hey " + request.inviter.getAsMention() + ", " + member.getUser().getName() + " has denied your request to join " + request.channel.getName() + "!";
             event.editMessage(response).setActionRows().queue();
-            logger.info(request.inviter.getUser().getName() + " issued command but failed: Invite Denied (" + request.inviter.getUser().getName() + " -> " + member.getUser().getName() + " for " + request.channel.getName() + ").");
+            logger.debug(request.inviter.getUser().getName() + " issued command but failed: Invite Denied (" + request.inviter.getUser().getName() + " -> " + member.getUser().getName() + " for " + request.channel.getName() + ").");
             vcRequests.remove(member);
             return;
         }
@@ -161,7 +161,7 @@ public class VCInviteListener extends ListenerAdapter {
         Guild guild = request.channel.getGuild();
         guild.moveVoiceMember(member, request.channel).queue();
 
-        logger.info(event.getUser().getName() + " accepted invite from " + request.inviter.getUser().getName() + " to " + request.channel.getName());
+        logger.debug(event.getUser().getName() + " accepted invite from " + request.inviter.getUser().getName() + " to " + request.channel.getName());
         String response = "Hey " + request.inviter.getUser().getName() + ", I moved " + member.getUser().getName() + " into " + request.channel.getName();
         event.editMessage(response).setActionRows().queue();
 

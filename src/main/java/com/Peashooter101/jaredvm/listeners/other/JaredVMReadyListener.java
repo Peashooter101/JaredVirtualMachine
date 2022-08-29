@@ -1,6 +1,7 @@
 package com.Peashooter101.jaredvm.listeners.other;
 
 import com.Peashooter101.jaredvm.JaredVM;
+import com.Peashooter101.jaredvm.listeners.command.AbbyListener;
 import com.Peashooter101.jaredvm.listeners.command.CmdTestListener;
 import com.Peashooter101.jaredvm.listeners.command.VCInviteListener;
 import net.dv8tion.jda.api.entities.Guild;
@@ -31,15 +32,14 @@ public class JaredVMReadyListener extends ListenerAdapter {
             g.updateCommands()
                     .addCommands(Commands.slash("vc-invite", "Invite a user to a private VC")
                             .addOption(OptionType.USER, "user", "The user to invite (Must already be in a VC).", true),
-                    Commands.slash("cmd-test", "Used for messing with slash commands.")
-                            .addOption(OptionType.USER, "user", "User"))
+                    Commands.slash("abby", "Used for amazing abby pictures."))
             .queue();
         }
     }
 
     private static void addEventListeners() {
         JaredVM.getApi().addEventListener(new VCInviteListener());
-        JaredVM.getApi().addEventListener(new CmdTestListener());
+        JaredVM.getApi().addEventListener(new AbbyListener());
     }
 
 }
