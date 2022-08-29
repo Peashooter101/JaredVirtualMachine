@@ -27,11 +27,14 @@ Oh also, the name "Jared Virtual Machine" is a play on Java Virtual Machine so y
 - Both users must be connected to a Voice Channel and then the person with permission can invite the other to the channel.
 - Uses fancy buttons for interactions and handling the invite requests.
 
+`/abby`
+- We have a [friend](https://github.com/RhythmicSys) with a cute dog.
+- The command gives us easy access to Abby pictures.
+- The pictures are saved and pulled from this repository!
+
 ---
 
 ### Planned Functionality
 
-`/abby`
-- We have a [friend](https://github.com/RhythmicSys) with a cute dog.
-- The goal of this command is to give us an easy way to add new pictures of abby and pull up random ones on command use.
-- Currently this is achieved by NightBot seeing a message starting with "abby" and it's tedious as heck to try to add new pictures.
+`/abby <get/add/remove/gallery>`
+- Need more commands for usability without shutting down the bot!
