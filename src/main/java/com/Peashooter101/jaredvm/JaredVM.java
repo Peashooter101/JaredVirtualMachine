@@ -4,6 +4,9 @@ import com.Peashooter101.jaredvm.listeners.message.PingPongListener;
 import com.Peashooter101.jaredvm.listeners.other.JaredVMReadyListener;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import java.io.File;
@@ -41,4 +44,13 @@ public class JaredVM {
     public static JDA getApi() {
         return api;
     }
+
+    public static void updateCommands(Guild g) {
+        g.updateCommands()
+                .addCommands(Commands.slash("vc-invite", "Invite a user to a private VC")
+                                .addOption(OptionType.USER, "user", "The user to invite (Must already be in a VC).", true),
+                        Commands.slash("abby", "Used for amazing abby pictures."))
+                .queue();
+    }
+
 }

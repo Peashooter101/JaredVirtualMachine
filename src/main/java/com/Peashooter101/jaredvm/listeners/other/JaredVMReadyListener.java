@@ -29,11 +29,7 @@ public class JaredVMReadyListener extends ListenerAdapter {
         SnowflakeCacheView<Guild> guilds = JaredVM.getApi().getGuildCache();
         for (Guild g : guilds) {
             logger.debug("Updating Commands for Guild: " + g.getName());
-            g.updateCommands()
-                    .addCommands(Commands.slash("vc-invite", "Invite a user to a private VC")
-                            .addOption(OptionType.USER, "user", "The user to invite (Must already be in a VC).", true),
-                    Commands.slash("abby", "Used for amazing abby pictures."))
-            .queue();
+            JaredVM.updateCommands(g);
         }
     }
 
