@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import java.io.File;
@@ -47,9 +48,18 @@ public class JaredVM {
 
     public static void updateCommands(Guild g) {
         g.updateCommands()
-                .addCommands(Commands.slash("vc-invite", "Invite a user to a private VC")
+                .addCommands(
+                        Commands.slash("vc-invite", "Invite a user to a private VC")
                                 .addOption(OptionType.USER, "user", "The user to invite (Must already be in a VC).", true),
-                        Commands.slash("abby", "Used for amazing abby pictures."))
+
+                        Commands.slash("abby", "Used for amazing abby pictures."),
+
+                        Commands.slash("valorant", "Valorant related stuff!").addSubcommands(
+                                new SubcommandData("profile", "Get the profile of the user!")
+                                        .addOption(OptionType.STRING, "user", "Example: Peashooter101#7016", true),
+                                new SubcommandData("rank", "Get the ranked data of the user!")
+                                        .addOption(OptionType.STRING, "user", "Example: Peashooter101#7016", true)
+                        ))
                 .queue();
     }
 

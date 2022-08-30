@@ -25,11 +25,10 @@ import java.util.Random;
 public class AbbyListener extends ListenerAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger(AbbyListener.class);
-    private static String path = "JaredVM_data/Abby";
-    private static String gitHubURI = "https://api.github.com/repos/Peashooter101/JaredVirtualMachine/contents/JaredVM_data/Abby";
-    private static ObjectMapper mapper = new ObjectMapper();
-    private static HttpRequest request = HttpRequest.newBuilder().uri(URI.create(gitHubURI)).GET().build();
-    private static HttpClient client = HttpClient.newHttpClient();
+    private static final String gitHubURI = "https://api.github.com/repos/Peashooter101/JaredVirtualMachine/contents/JaredVM_data/Abby";
+    private static final ObjectMapper mapper = new ObjectMapper();
+    private static final HttpRequest request = HttpRequest.newBuilder().uri(URI.create(gitHubURI)).GET().build();
+    private static final HttpClient client = HttpClient.newHttpClient();
 
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {

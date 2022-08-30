@@ -14,8 +14,9 @@ public class CmdTestListener extends ListenerAdapter {
         event.deferReply().queue();
 
         // Test Reply
-        OptionMapping user = event.getOption("user");
-        if (user == null) {
+        String subcommand = event.getSubcommandName();
+        String subcommandGroup = event.getSubcommandGroup();
+        if (subcommand == null) {
             event.getHook().sendMessage("Nope " + event.getUser().getAsMention()).queue();
             return;
         }
@@ -23,6 +24,8 @@ public class CmdTestListener extends ListenerAdapter {
         event.getHook().sendMessage(event.getUser().getAsMention() + " sent command.").queue();
 
         event.getHook().sendMessage("Sending a second message!").queue();
+
+        event.getHook().sendMessage(subcommand + " / " + subcommandGroup).queue();
 
     }
 
