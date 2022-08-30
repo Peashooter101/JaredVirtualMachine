@@ -65,6 +65,15 @@ public class ValorantListener extends ListenerAdapter {
                 logger.warn("An error has occurred, the rate limit has been hit.");
                 return null;
             }
+            case 500 -> {
+                logger.warn("An error has occurred, internal server error.");
+                return null;
+            }
+        }
+
+        if (response.statusCode() != 200) {
+            logger.warn("An unknown error has occurred.");
+            return null;
         }
 
         ValorantProfile profile;
