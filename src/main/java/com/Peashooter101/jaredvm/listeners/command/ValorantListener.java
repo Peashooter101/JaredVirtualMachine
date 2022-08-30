@@ -47,7 +47,7 @@ public class ValorantListener extends ListenerAdapter {
 
         HttpResponse<String> response;
         try {
-            String url = valorantEndpoint + "v1/account/" + nameData[0] + "/" + nameData[1];
+            String url = valorantEndpoint + "v1/account/" + nameData[0].replaceAll(" ", "%20") + "/" + nameData[1];
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
         }
