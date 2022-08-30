@@ -32,6 +32,11 @@ Oh also, the name "Jared Virtual Machine" is a play on Java Virtual Machine so y
 - The command gives us easy access to Abby pictures.
 - The pictures are saved and pulled from this repository!
 
+`/valorant profile <valorantName>`
+- Fetches some data about the Valorant account.
+- valorantName should look like `Peashooter101#7016`.
+- Special Thanks to [Hendrik](https://docs.henrikdev.xyz/) for their Valorant API.
+
 ---
 
 ### Planned Functionality
@@ -39,6 +44,8 @@ Oh also, the name "Jared Virtual Machine" is a play on Java Virtual Machine so y
 `/abby <get/add/remove/gallery>`
 - Need more commands for usability without shutting down the bot!
 
-`/valorant <valorantId>`
-- Access Tracker.gg API or Riot REST API to pull generalized tracker stats.
-- Subcommand for specific matches from match history.
+`/valorant <profile/rank/history>`
+- Pull generalized ranked data for use in `/valorant profile`.
+- Pull detailed ranked data for the given episode in `/valorant rank`.
+  - Provide an optional argument for Episode / Act.
+- Pull and generate match history data for `/valorant history`.
