@@ -1,13 +1,14 @@
 package com.Peashooter101.jaredvm.listeners.command;
 
 import com.Peashooter101.jaredvm.utility.valorant.ValorantProfile;
+import com.Peashooter101.jaredvm.utility.valorant.ValorantRank;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,13 +42,81 @@ public class ValorantListener extends ListenerAdapter {
 
     }
 
-    private ValorantProfile getProfile(String name) {
+    private ValorantProfile getProfile(@NotNull String name) {
         String[] nameData = name.split("#");
         if (nameData.length < 2) { return null; }
+        String url = valorantEndpoint + "v1/account/" + nameData[0].replaceAll(" ", "%20") + "/" + nameData[1];
+        String responseBody = getResponseBody(url);
+
+        if (responseBody == null) { return null; }
+
+        ValorantProfile profile;
+        try {
+            JsonNode node = mapper.readValue(responseBody, JsonNode.class);
+            profile = mapper.readValue(node.get("data").toString(), ValorantProfile.class);
+        }
+        catch (JsonProcessingException e) {
+            logger.error("An error has occurred, the profile cannot be mapped.");
+            return null;
+        }
+        return profile;
+    }
+
+    private ValorantRank getRank(@NotNull String puuid, @NotNull String region) {
+        String url = valorantEndpoint + "v2/by-puuid/mmr/" + region + "/" + puuid;
+        String responseBody = getResponseBody(url);
+
+        if (responseBody == null) { return null; }
+
+        ValorantRank rank;
+        try {
+            JsonNode node = mapper.readValue(responseBody, JsonNode.class);
+            rank = mapper.readValue(node.get("data").toString(), ValorantRank.class);
+        }
+        catch (JsonProcessingException e) {
+            logger.error("An error has occurred, the profile cannot be mapped.");
+            return null;
+        }
+        return rank;
+    }
+
+    private void profile(SlashCommandInteractionEvent event) {
+        ValorantProfile profile = getProfile(Objects.requireNonNull(event.getOption("user")).getAsString());
+        if (profile == null) {
+            event.getHook().editOriginal(cannotFindProfile).queue();
+            return;
+        }
+
+        EmbedBuilder embed = new EmbedBuilder();
+        embed.setTitle(profile.name, null)
+                .setColor(new Color(0xBD3944))
+                .setDescription(profile.name + "#" + profile.tag)
+                .setFooter("Requested by: " + event.getUser().getAsTag(), event.getUser().getAvatarUrl())
+                .setImage(profile.card.wide)
+                .setThumbnail(profile.card.small)
+                .addField("Region: ", profile.region.toUpperCase(Locale.ENGLISH), true)
+                .addField("Account Level: ", String.valueOf(profile.account_level), true);
+
+        ValorantRank rankData = getRank(profile.puuid, profile.region);
+
+        if (rankData == null) {
+            embed.addField("Rank: ", "Cannot be loaded.", false);
+            event.getHook().editOriginalEmbeds(embed.build()).queue();
+            return;
+        }
+
+        event.getHook().editOriginalEmbeds(embed.build()).queue();
+    }
+
+    private void rank(SlashCommandInteractionEvent event) {
+        // ValorantProfile profile = getProfile(Objects.requireNonNull(event.getOption("user")).getAsString());
+        event.getHook().editOriginal("This is not yet implemented!").queue();
+    }
+
+    private String getResponseBody(String url) {
 
         HttpResponse<String> response;
         try {
-            String url = valorantEndpoint + "v1/account/" + nameData[0].replaceAll(" ", "%20") + "/" + nameData[1];
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
         }
@@ -76,41 +145,7 @@ public class ValorantListener extends ListenerAdapter {
             return null;
         }
 
-        ValorantProfile profile;
-        try {
-            JsonNode node = mapper.readValue(response.body(), JsonNode.class);
-            profile = mapper.readValue(node.get("data").toString(), ValorantProfile.class);
-        }
-        catch (JsonProcessingException e) {
-            logger.error("An error has occurred, the profile cannot be mapped.");
-            return null;
-        }
-        return profile;
-    }
-
-    private void profile(SlashCommandInteractionEvent event) {
-        ValorantProfile profile = getProfile(Objects.requireNonNull(event.getOption("user")).getAsString());
-        if (profile == null) {
-            event.getHook().editOriginal(cannotFindProfile).queue();
-            return;
-        }
-
-        EmbedBuilder embed = new EmbedBuilder();
-        embed.setTitle(profile.name, null)
-                .setColor(new Color(0xBD3944))
-                .setDescription(profile.name + "#" + profile.tag)
-                .setFooter("Requested by: " + event.getUser().getAsTag(), event.getUser().getAvatarUrl())
-                .setImage(profile.card.wide)
-                .setThumbnail(profile.card.small)
-                .addField("Region: ", profile.region.toUpperCase(Locale.ROOT), true)
-                .addField("Account Level: ", String.valueOf(profile.account_level), true);
-
-        event.getHook().editOriginalEmbeds(embed.build()).queue();
-    }
-
-    private void rank(SlashCommandInteractionEvent event) {
-        // ValorantProfile profile = getProfile(Objects.requireNonNull(event.getOption("user")).getAsString());
-        event.getHook().editOriginal("This is not yet implemented!").queue();
+        return response.body();
     }
 
 }
