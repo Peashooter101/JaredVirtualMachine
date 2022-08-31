@@ -23,12 +23,12 @@ public class OverlayImagesExp {
     }
 
     private static void generateThumbnail() {
-        BufferedImage valorantBorder;
+        BufferedImage valorantAccLevel;
         BufferedImage omenSmall;
 
         // Get assets
         try {
-            valorantBorder = ImageIO.read(new File(expImagesPath + "L1T1.png"));
+            valorantAccLevel = ImageIO.read(new File(expImagesPath + valorantBorder));
             omenSmall = ImageIO.read(new URL(valorantOmenSmallURI));
         }
         catch (IOException e) {
@@ -37,15 +37,15 @@ public class OverlayImagesExp {
         }
 
         // Merge Image
-        BufferedImage thumbnail = new BufferedImage(valorantBorder.getWidth(), valorantBorder.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        double scaleFactor = (valorantBorder.getWidth() / (double) omenSmall.getWidth()) - .25;
+        BufferedImage thumbnail = new BufferedImage(valorantAccLevel.getWidth(), valorantAccLevel.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        double scaleFactor = (valorantAccLevel.getWidth() / (double) omenSmall.getWidth()) - .25;
         int scale = (int) (scaleFactor * omenSmall.getWidth());
         int offsetX = (thumbnail.getWidth() - scale) / 2;
         int offsetY = ((thumbnail.getHeight() - scale) / 2) - 7;
 
         Graphics g = thumbnail.getGraphics();
         g.drawImage(omenSmall, offsetX, offsetY, scale, scale, null);
-        g.drawImage(valorantBorder, 0, 0, null);
+        g.drawImage(valorantAccLevel, 0, 0, null);
         g.dispose();
 
         // Output Image
