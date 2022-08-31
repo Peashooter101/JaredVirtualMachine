@@ -74,20 +74,20 @@ Oh also, the name "Jared Virtual Machine" is a play on Java Virtual Machine so y
 
 ### Experimentation
 
-I created a little playground to keep track of some of the experiments I am conducting in relation to this project. Think of it as a place for me to store my practice runs without having to force the bot to run. Some of the early experimentation may not be present in the Experimentation Package since I made this a few weeks after initially starting the project. This package *should* not compile when running Maven Package.
+I created a little playground to keep track of some of the experiments I am conducting in relation to this project. Think of it as a place for me to store my practice runs without having to force the bot to run. Some of the early experimentation may not be present in the Experimentation Package since I made this a few weeks after initially starting the project.
 
-You can find the [Experimentation Package here](https://github.com/Peashooter101/JaredVirtualMachine/tree/main/src/main/java/com/Peashooter101/experimentation).
+You can find the [Experimentation Package here](https://github.com/Peashooter101/JaredVirtualMachine/tree/main/src/test/java/experimentation).
 
 > **Note**
 > 
 > This is meant to be a playground and will not be updated for any reason outside of me doing random tests.
 > 
-> I did not name it `test` since I am not unit testing this application with this package but I am considering getting JUnit anyway so I don't have to make tons of mains... Hm...
+> It is under the `test` directory but it is located within `experimentation` because I am not trying to test the application.
 
 Some experiments I have conducted...
 - Using HttpRequest, HttpResponse, and HttpClient for GET requests.
 - Using Jackson API to map JSON into Objects.
-- Merging, scaling, and modifying images using BufferedImage and Graphics ([OverlayImagesExp.java](https://github.com/Peashooter101/JaredVirtualMachine/blob/main/src/main/java/com/Peashooter101/experimentation/OverlayImagesExp.java)).
+- Merging, scaling, and modifying images using BufferedImage and Graphics ([OverlayImagesExp.java](https://github.com/Peashooter101/JaredVirtualMachine/blob/main/src/test/java/experimentation/OverlayImagesTest.java)).
 
 Some ideas I have...
 - Using the [Imgur API](https://apidocs.imgur.com/) for images I don't really mind losing later on.
