@@ -1,4 +1,6 @@
-package com.Peashooter101.experimentation;
+package experimentation;
+
+import org.junit.jupiter.api.Test;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -7,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-public class OverlayImagesExp {
+public class OverlayImagesTest {
 
     public static final String expImagesPath = "JaredVM_data/Experimentation/Images/";
 
@@ -17,12 +19,8 @@ public class OverlayImagesExp {
     public static final String valorantBorder = "L1T1.png";
     public static final String valorantOmenSmallURI = "https://media.valorant-api.com/playercards/7b240a91-4925-8bb6-7812-60b49543e145/smallart.png";
 
-    public static void main(String[] args) {
-        // mergeRankAndBanner();
-        generateThumbnail();
-    }
-
-    private static void generateThumbnail() {
+    @Test
+    public void generateThumbnail() {
         BufferedImage valorantAccLevel;
         BufferedImage omenSmall;
 
@@ -58,7 +56,8 @@ public class OverlayImagesExp {
 
     }
 
-    private static void mergeRankAndBanner() {
+    @Test
+    public void mergeRankAndBanner() {
         BufferedImage goldIcon;
         BufferedImage omenWide;
 
