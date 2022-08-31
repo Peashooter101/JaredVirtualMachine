@@ -70,6 +70,11 @@ Oh also, the name "Jared Virtual Machine" is a play on Java Virtual Machine so y
   - The Easy Route: Use the Sentiment Analysis or other Microsoft AI services.
   - The Hard Route: Decide to figure out what's "related" on your own.
 
+`/pin <messageLink / messageID>`
+- This is a [Feature Request](https://github.com/Peashooter101/JaredVirtualMachine/issues/1)
+- The bot will push this message to a pin channel.
+- The bot will have to save the "pin channel" location in some useful way depending on the server.
+
 ---
 
 ### Experimentation
