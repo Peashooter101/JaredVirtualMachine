@@ -35,8 +35,7 @@ public class ImageUtil {
         g.drawImage(levelBorder, 0, 0, null);
         g.dispose();
 
-        // Output Image TODO: Figure out how to return this in a suitable way for an embed.
-        return null;
+        return post(thumbnail);
     }
 
     public static String generateFooter(String wideBannerURI, String rankIconURI) {
@@ -50,20 +49,26 @@ public class ImageUtil {
         }
         catch (IOException e) {
             e.printStackTrace();
-            return;
+            return null;
         }
 
         // Merge Image
-        BufferedImage merged = new BufferedImage(wideBanner.getWidth(), wideBanner.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        BufferedImage footer = new BufferedImage(wideBanner.getWidth(), wideBanner.getHeight(), BufferedImage.TYPE_INT_ARGB);
         double scaleFactor = 0.85;
         int scale = (int) (scaleFactor * wideBanner.getHeight());
         int offsetY = (int) ((1 - scaleFactor) * wideBanner.getHeight() / 2);
         int offsetX = wideBanner.getWidth() - scale - offsetY;
 
-        Graphics g = merged.getGraphics();
+        Graphics g = footer.getGraphics();
         g.drawImage(wideBanner, 0, 0, null);
         g.drawImage(rankIcon, offsetX, offsetY, scale, scale, null);
         g.dispose();
+
+        return post(footer);
+    }
+
+    public static String post(BufferedImage image) {
+        return null;
     }
 
 }
