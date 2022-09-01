@@ -15,7 +15,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Base64;
 
-public class ImageToBase64Test {
+public class ImgurUploadTest {
 
     @Test
     public String convertImageTo64() throws IOException {
