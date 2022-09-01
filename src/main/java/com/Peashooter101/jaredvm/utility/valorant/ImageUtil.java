@@ -1,5 +1,7 @@
 package com.Peashooter101.jaredvm.utility.valorant;
 
+import com.Peashooter101.jaredvm.utility.imgur.ImgurUtil;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -9,7 +11,12 @@ import java.net.URL;
 
 public class ImageUtil {
 
-    public static String generateThumbnail(String smallIconURI, String levelBorderURI) {
+    public static String generateThumbnail(String smallIconURI, int level) {
+        int tier = level / 20;
+
+        // TODO: Determine image to use based on level.
+        String levelBorderURI = "";
+
         BufferedImage levelBorder;
         BufferedImage smallIcon;
 
@@ -35,7 +42,7 @@ public class ImageUtil {
         g.drawImage(levelBorder, 0, 0, null);
         g.dispose();
 
-        return post(thumbnail);
+        return ImgurUtil.postImage(thumbnail);
     }
 
     public static String generateFooter(String wideBannerURI, String rankIconURI) {
@@ -64,11 +71,7 @@ public class ImageUtil {
         g.drawImage(rankIcon, offsetX, offsetY, scale, scale, null);
         g.dispose();
 
-        return post(footer);
-    }
-
-    public static String post(BufferedImage image) {
-        return null;
+        return ImgurUtil.postImage(footer);
     }
 
 }

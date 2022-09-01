@@ -74,7 +74,7 @@ public class ValorantListener extends ListenerAdapter {
             rank = mapper.readValue(node.get("data").toString(), ValorantRank.class);
         }
         catch (JsonProcessingException e) {
-            logger.error("An error has occurred, the profile cannot be mapped.");
+            logger.error("An error has occurred, the rank cannot be mapped.");
             return null;
         }
         return rank;

@@ -11,16 +11,25 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
+import javax.security.auth.login.LoginException;
+
 public class JaredVM {
-    private static String botToken = null;
     private static JDA api = null;
 
-    public static void main(String[] arguments) throws Exception {
-        api = JDABuilder.create(AuthHandler.getBotToken(),
-                GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MEMBERS,
-                GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_EMOJIS_AND_STICKERS,
-                GatewayIntent.GUILD_PRESENCES
-        ).build();
+    public static void main(String[] arguments) {
+
+        try {
+            api = JDABuilder.create(AuthHandler.getBotToken(),
+                    GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MEMBERS,
+                    GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_EMOJIS_AND_STICKERS,
+                    GatewayIntent.GUILD_PRESENCES
+            ).build();
+        }
+        catch (LoginException e) {
+            e.printStackTrace();
+            System.out.println("Failed to login, exiting...");
+            return;
+        }
 
         api.addEventListener(new PingPongListener());
         api.addEventListener(new JaredVMReadyListener());
