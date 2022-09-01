@@ -90,7 +90,7 @@ You can find the [Experimentation Package here](https://github.com/Peashooter101
 > It is under the `test` directory but it is located within `experimentation` because I am not trying to test the application.
 
 Some experiments I have conducted...
-- Using HttpRequest, HttpResponse, and HttpClient for GET requests.
+- Using HttpRequest, HttpResponse, and HttpClient for GET/POST requests.
 - Using Jackson API to map JSON into Objects.
 - Merging, scaling, and modifying images using BufferedImage and Graphics ([OverlayImagesExp.java](https://github.com/Peashooter101/JaredVirtualMachine/blob/main/src/test/java/experimentation/OverlayImagesTest.java)).
 - Converting a BufferedImage into a Base64 String and sending that info up to Imgur ([ImgurUploadTest.java](https://github.com/Peashooter101/JaredVirtualMachine/blob/main/src/test/java/experimentation/ImgurUploadTest.java)).
