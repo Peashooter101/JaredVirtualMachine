@@ -32,10 +32,10 @@ public class ImageUtil {
 
         // Merge Image
         BufferedImage thumbnail = new BufferedImage(levelBorder.getWidth(), levelBorder.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        double scaleFactor = (levelBorder.getWidth() / (double) smallIcon.getWidth()) - .25;
+        double scaleFactor = 1;
         int scale = (int) (scaleFactor * smallIcon.getWidth());
         int offsetX = (thumbnail.getWidth() - scale) / 2;
-        int offsetY = ((thumbnail.getHeight() - scale) / 2) - 7;
+        int offsetY = ((thumbnail.getHeight() - scale) / 2) - 11;
 
         Graphics g = thumbnail.getGraphics();
         g.drawImage(smallIcon, offsetX, offsetY, scale, scale, null);
