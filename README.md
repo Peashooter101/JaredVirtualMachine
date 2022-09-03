@@ -53,7 +53,7 @@ Oh also, the name "Jared Virtual Machine" is a play on Java Virtual Machine so y
 - Need more commands for usability without shutting down the bot!
 
 `/valorant <profile/rank/history>`
-- Pull generalized ranked data for use in `/valorant profile`.
+- For the account level, draw the level onto the border rather than using their "Level Tier" for the border.
 - Pull detailed ranked data for the given episode in `/valorant rank`.
   - Provide an optional argument for Episode / Act.
 - Pull and generate match history data for `/valorant history`.
@@ -95,6 +95,9 @@ Some experiments I have conducted...
 - Using Jackson API to map JSON into Objects.
 - Merging, scaling, and modifying images using BufferedImage and Graphics ([OverlayImagesExp.java](https://github.com/Peashooter101/JaredVirtualMachine/blob/main/src/test/java/experimentation/OverlayImagesTest.java)).
 - Converting a BufferedImage into a Base64 String and sending that info up to Imgur ([ImgurUploadTest.java](https://github.com/Peashooter101/JaredVirtualMachine/blob/main/src/test/java/experimentation/ImgurUploadTest.java)).
+
+Some ideas I have...
+- Use Graphics to draw text onto a BufferedImage ([StackOverflow Reference](https://stackoverflow.com/questions/2658554/using-graphics2d-to-overlay-text-on-a-bufferedimage-and-return-a-bufferedimage)).
 
 ---
 
