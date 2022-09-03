@@ -102,6 +102,9 @@
                         <version>1.0.2</version>
                     </dependency>
                 </dependencies>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
             </plugin>
         </plugins>
     </build>
