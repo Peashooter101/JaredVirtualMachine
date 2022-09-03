@@ -1,5 +1,6 @@
 package com.Peashooter101.jaredvm.listeners.command;
 
+import com.Peashooter101.jaredvm.utility.valorant.ImageUtil;
 import com.Peashooter101.jaredvm.utility.valorant.ValorantProfile;
 import com.Peashooter101.jaredvm.utility.valorant.ValorantRank;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -87,23 +88,31 @@ public class ValorantListener extends ListenerAdapter {
             return;
         }
 
+        String thumbnail = ImageUtil.generateThumbnail(profile.card.small, profile.account_level);
+
         EmbedBuilder embed = new EmbedBuilder();
         embed.setTitle(profile.name, null)
                 .setColor(new Color(0xBD3944))
                 .setDescription(profile.name + "#" + profile.tag)
                 .setFooter("Requested by: " + event.getUser().getAsTag(), event.getUser().getAvatarUrl())
                 .setImage(profile.card.wide)
-                .setThumbnail(profile.card.small)
+                .setThumbnail(thumbnail)
                 .addField("Region: ", profile.region.toUpperCase(Locale.ENGLISH), true)
                 .addField("Account Level: ", String.valueOf(profile.account_level), true);
 
         ValorantRank rankData = getRank(profile.puuid, profile.region);
 
         if (rankData == null) {
-            embed.addField("Rank: ", "Cannot be loaded.", false);
+            embed.addField("Rank: ", "Cannot be loaded.", true);
             event.getHook().editOriginalEmbeds(embed.build()).queue();
             return;
         }
+
+        String rank = (rankData.current_data.currenttierpatched == null) ?
+                "Unranked" : rankData.current_data.currenttierpatched + " (" + rankData.current_data.ranking_in_tier + ")";
+        String image = ImageUtil.generateFooter(profile.card.wide, rankData.current_data.images.large);
+        embed.addField("Rank: ", rank, true)
+                .setImage(image);
 
         event.getHook().editOriginalEmbeds(embed.build()).queue();
     }
@@ -141,7 +150,7 @@ public class ValorantListener extends ListenerAdapter {
         }
 
         if (response.statusCode() != 200) {
-            logger.warn("An unknown error has occurred.");
+            logger.warn("An unknown error has occurred: " + response.statusCode());
             return null;
         }
 

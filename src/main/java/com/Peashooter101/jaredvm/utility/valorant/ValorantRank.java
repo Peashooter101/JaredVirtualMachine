@@ -2,19 +2,13 @@ package com.Peashooter101.jaredvm.utility.valorant;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(value = {
-        // Image Fields
-        "triangle_up", "triangle_down",
-
-        // Categorical Fields
-        "by_season"
-
-})
+@JsonIgnoreProperties(value = { "by_season" })
 public class ValorantRank {
 
     public String name;
     public String tag;
     public String puuid;
+    public CurrentData current_data;
 
     public static class CurrentData {
         public int currenttier;
@@ -27,11 +21,13 @@ public class ValorantRank {
         public boolean old;
     }
 
+    @JsonIgnoreProperties(value = {"triangle_up", "triangle_down"})
     public static class Images {
         public String small;
         public String large;
     }
 
+    // TODO: Figure out how to use this, field name by_season
     public static class SeasonStats {
         public int wins;
         public int number_of_games;

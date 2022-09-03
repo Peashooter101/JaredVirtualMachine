@@ -4,21 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
-@JsonIgnoreProperties( value = {
-
-        // metadata fields
-        "game_version", "game_start", "game_start_patched", "season_id", "platform", "region",
-
-        // Field Categories
-        "all_players", "teams", "rounds", "kills"
-
-})
+@JsonIgnoreProperties( value = { "all_players", "teams", "rounds", "kills" })
 public class ValorantMatch {
 
     Metadata metadata;
     List<ValorantPlayer> red;
     List<ValorantPlayer> blue;
 
+    @JsonIgnoreProperties(value = {"game_version", "game_start", "game_start_patched", "season_id", "platform", "region"})
     public static class Metadata {
 
         public String map;

@@ -1,33 +1,39 @@
 package com.Peashooter101.jaredvm.utility.valorant;
 
+import com.Peashooter101.jaredvm.utility.github.GitHubRepoItem;
+import com.Peashooter101.jaredvm.utility.github.GitHubUtil;
 import com.Peashooter101.jaredvm.utility.imgur.ImgurUtil;
+import org.jetbrains.annotations.NotNull;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class ImageUtil {
 
+    private static final String borderIconsURI = "https://api.github.com/repositories/524571440/contents/JaredVM_data/Valorant%20Account%20Borders/Borders";
+
+    @NotNull
     public static String generateThumbnail(String smallIconURI, int level) {
         int tier = level / 20;
-
-        // TODO: Determine image to use based on level.
-        String levelBorderURI = "";
+        ArrayList<GitHubRepoItem> borderIcons = GitHubUtil.getGitHubItems(borderIconsURI);
+        if (borderIcons == null) { return smallIconURI; }
+        String levelBorderURI = (tier < borderIcons.size()) ? borderIcons.get(tier).download_url : borderIcons.get(borderIcons.size()-1).download_url;
 
         BufferedImage levelBorder;
         BufferedImage smallIcon;
 
         // Get assets
         try {
-            levelBorder = ImageIO.read(new File(levelBorderURI));
+            levelBorder = ImageIO.read(new URL(levelBorderURI));
             smallIcon = ImageIO.read(new URL(smallIconURI));
         }
         catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return smallIconURI;
         }
 
         // Merge Image
@@ -42,9 +48,12 @@ public class ImageUtil {
         g.drawImage(levelBorder, 0, 0, null);
         g.dispose();
 
-        return ImgurUtil.postImage(thumbnail);
+        String returnUri = ImgurUtil.postImage(thumbnail);
+
+        return (returnUri == null) ? smallIconURI : returnUri;
     }
 
+    @NotNull
     public static String generateFooter(String wideBannerURI, String rankIconURI) {
         BufferedImage rankIcon;
         BufferedImage wideBanner;
@@ -55,8 +64,7 @@ public class ImageUtil {
             wideBanner = ImageIO.read(new URL(wideBannerURI));
         }
         catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            return wideBannerURI;
         }
 
         // Merge Image
@@ -71,7 +79,10 @@ public class ImageUtil {
         g.drawImage(rankIcon, offsetX, offsetY, scale, scale, null);
         g.dispose();
 
-        return ImgurUtil.postImage(footer);
+
+        String returnUri = ImgurUtil.postImage(footer);
+
+        return (returnUri == null) ? wideBannerURI : returnUri;
     }
 
 }

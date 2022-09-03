@@ -49,7 +49,7 @@ public class ImgurUtil {
             return null;
         }
 
-        return node.get("data").get("link").toString();
+        return node.get("data").get("link").asText();
 
     }
 
