@@ -20,7 +20,7 @@ Oh also, the name "Jared Virtual Machine" is a play on Java Virtual Machine so y
 
 > **Warning**
 > 
-> Yeah no, there isn't anything that I'd consider to be stable right now. If you plan on taking my bot, uhh... Good luck...
+> This bot exists for personal use! If you take it and use it, use at your own risk.
 
 `!ping`
 - Pong!
@@ -47,6 +47,7 @@ Oh also, the name "Jared Virtual Machine" is a play on Java Virtual Machine so y
 `/vc <invite/request> <user>`
 - Change the format of the command to have two subcommands.
 - `/vc request` should be the same as `/vc invite` but they are requesting permission to join.
+- Make it look fancy using Embeds cause Embeds are cooler.
 
 `/abby <get/add/remove/gallery>`
 - Need more commands for usability without shutting down the bot!
@@ -95,5 +96,20 @@ Some experiments I have conducted...
 - Merging, scaling, and modifying images using BufferedImage and Graphics ([OverlayImagesExp.java](https://github.com/Peashooter101/JaredVirtualMachine/blob/main/src/test/java/experimentation/OverlayImagesTest.java)).
 - Converting a BufferedImage into a Base64 String and sending that info up to Imgur ([ImgurUploadTest.java](https://github.com/Peashooter101/JaredVirtualMachine/blob/main/src/test/java/experimentation/ImgurUploadTest.java)).
 
-Some ideas I have...
-- Using the [Imgur API](https://apidocs.imgur.com/) for images I don't really mind losing later on.
+---
+
+### Demo Images
+
+Wanna see some of the stuff without using the bot? :smile:
+
+`/abby`
+
+![Abby Demo](https://github.com/Peashooter101/JaredVirtualMachine/blob/main/Demo%20Images/Abby%20Demo.png?raw=true)
+
+`/vc-invite <@user>`
+
+![Voice Chat Invite Demo](https://github.com/Peashooter101/JaredVirtualMachine/blob/main/Demo%20Images/Voice%20Channel%20Invite%20Demo.png?raw=true)
+
+`/valorant profile <user>`
+
+![Valorant Profile Demo](https://github.com/Peashooter101/JaredVirtualMachine/blob/main/Demo%20Images/Valorant%20Profile%20Demo.png?raw=true)
