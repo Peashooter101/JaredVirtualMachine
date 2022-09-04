@@ -1,6 +1,6 @@
 # JaredVirtualMachine
 
-![stability shield](https://img.shields.io/badge/stability-not-red) ![usability shield](https://img.shields.io/badge/usability-prob_not-orange)
+![stability shield](https://img.shields.io/badge/stability-not-red) ![usability shield](https://img.shields.io/badge/usability-prob_not-orange) ![green shield](https://img.shields.io/badge/isGreen-true-brightgreen)
 
 ### Why Jared Virtual Machine?
 
