@@ -52,12 +52,14 @@ Oh also, the name "Jared Virtual Machine" is a play on Java Virtual Machine so y
 `/abby <get/add/remove/gallery>`
 - Need more commands for usability without shutting down the bot!
 
-`/valorant <profile/rank/history>`
+`/valorant <profile/rank/history/skins>`
 - For the account level, draw the level onto the border rather than using their "Level Tier" for the border.
 - Pull detailed ranked data for the given episode in `/valorant rank`.
   - Provide an optional argument for Episode / Act.
 - Pull and generate match history data for `/valorant history`.
 - Consider caching the data locally somehow... :thinking:
+- Pull and display weapon skin stuff with `/valorant skins <skinName>`
+  - Might need to use a database for this one chief... There are a lot of skins...
 
 `/<game>`
 - Similar to the `/valorant` command, pull game information depending on the game.
@@ -98,6 +100,7 @@ Some experiments I have conducted...
 
 Some ideas I have...
 - Use Graphics to draw text onto a BufferedImage ([StackOverflow Reference](https://stackoverflow.com/questions/2658554/using-graphics2d-to-overlay-text-on-a-bufferedimage-and-return-a-bufferedimage)).
+- Use a database that gets routinely updated by the bot because I have too much data and too much object mapping going on.
 
 ---
 
