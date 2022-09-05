@@ -7,8 +7,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.requests.restaction.WebhookMessageUpdateAction;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,33 +90,46 @@ public class ValorantListener extends ListenerAdapter {
             return;
         }
 
-        String thumbnail = ImageUtil.generateThumbnail(profile.card.small, profile.account_level);
-
+        // Build Default Embed
         EmbedBuilder embed = new EmbedBuilder();
         embed.setTitle(profile.name, null)
                 .setColor(new Color(0xBD3944))
                 .setDescription(profile.name + "#" + profile.tag)
                 .setFooter("Requested by: " + event.getUser().getAsTag(), event.getUser().getAvatarUrl())
                 .setImage(profile.card.wide)
-                .setThumbnail(thumbnail)
+                .setThumbnail(profile.card.small)
                 .addField("Region: ", profile.region.toUpperCase(Locale.ENGLISH), true)
                 .addField("Account Level: ", String.valueOf(profile.account_level), true);
 
-        ValorantRank rankData = getRank(profile.puuid, profile.region);
+        // Edit if thumbnail could be generated
+        byte[] thumbnail = ImageUtil.generateThumbnail(profile.card.small, profile.account_level);
+        if (thumbnail != null) {
+            embed.setThumbnail("attachment://thumbnail.png");
+        }
 
+        // Rank Data Check
+        ValorantRank rankData = getRank(profile.puuid, profile.region);
         if (rankData == null) {
             embed.addField("Rank: ", "Cannot be loaded.", true);
-            event.getHook().editOriginalEmbeds(embed.build()).queue();
+            WebhookMessageUpdateAction<Message> action = event.getHook().editOriginalEmbeds(embed.build());
+            if (thumbnail != null) { action = action.addFile(thumbnail, "thumbnail.png"); }
+            action.queue();
             return;
         }
 
-        String rank = (rankData.current_data.currenttierpatched == null) ?
-                "Unranked" : rankData.current_data.currenttierpatched + " (" + rankData.current_data.ranking_in_tier + ")";
-        String image = ImageUtil.generateFooter(profile.card.wide, rankData.current_data.images.large);
-        embed.addField("Rank: ", rank, true)
-                .setImage(image);
+        String rank = (rankData.current_data.currenttierpatched == null) ? "Unranked" : rankData.current_data.currenttierpatched + " (" + rankData.current_data.ranking_in_tier + ")";
+        embed.addField("Rank: ", rank, true);
 
-        event.getHook().editOriginalEmbeds(embed.build()).queue();
+        // Edit if footer image could be generated
+        byte[] image = ImageUtil.generateFooterImage(profile.card.wide, rankData.current_data.images.large);
+        if (image != null) {
+            embed.setImage("attachment://footer.png");
+        }
+
+        WebhookMessageUpdateAction<Message> action = event.getHook().editOriginalEmbeds(embed.build());
+        if (thumbnail != null) { action = action.addFile(thumbnail, "thumbnail.png"); }
+        if (image != null) { action = action.addFile(image, "footer.png"); }
+        action.queue();
     }
 
     private void rank(SlashCommandInteractionEvent event) {
