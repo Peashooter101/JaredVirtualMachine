@@ -68,6 +68,7 @@ public class ValorantListener extends ListenerAdapter {
     private ValorantRank getRank(@NotNull String puuid, @NotNull String region) {
         String url = valorantEndpoint + "v2/by-puuid/mmr/" + region + "/" + puuid;
         String responseBody = getResponseBody(url);
+        logger.debug(responseBody);
 
         if (responseBody == null) { return null; }
 
@@ -116,6 +117,7 @@ public class ValorantListener extends ListenerAdapter {
             action.queue();
             return;
         }
+        logger.debug(String.valueOf(rankData.current_data.images));
 
         String rank = (rankData.current_data.currenttierpatched == null) ? "Unranked" : rankData.current_data.currenttierpatched + " (" + rankData.current_data.ranking_in_tier + ")";
         embed.addField("Rank: ", rank, true);

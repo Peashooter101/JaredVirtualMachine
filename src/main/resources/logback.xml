@@ -7,7 +7,7 @@
     </appender>
 
     <!-- change level to "debug" from "info" to enable debug logs -->
-    <root level="info">
+    <root level="debug">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>
