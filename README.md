@@ -60,6 +60,7 @@ Oh also, the name "Jared Virtual Machine" is a play on Java Virtual Machine so y
 - Consider caching the data locally somehow... :thinking:
 - Pull and display weapon skin stuff with `/valorant skins <skinName>`
   - Might need to use a database for this one chief... There are a lot of skins...
+  - Consider using [Valorant-API](https://dash.valorant-api.com/) for in-game content for this command.
 
 `/<game>`
 - Similar to the `/valorant` command, pull game information depending on the game.
