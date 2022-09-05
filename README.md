@@ -40,6 +40,12 @@ Oh also, the name "Jared Virtual Machine" is a play on Java Virtual Machine so y
 - valorantName should look like `Peashooter101#7016`.
 - Special Thanks to [Henrik](https://docs.henrikdev.xyz/) for their Valorant API.
 
+`Pin Message`
+- This was a [Feature Request](https://github.com/Peashooter101/JaredVirtualMachine/issues/1)
+- Accessed through the Context Menu (right-click Message).
+- Works only for indivdiuals with the Administrator Permission.
+- Sends to the top most text channel with a "📌" in its name.
+
 ---
 
 ### Planned Functionality
@@ -74,10 +80,10 @@ Oh also, the name "Jared Virtual Machine" is a play on Java Virtual Machine so y
   - The Easy Route: Use the Sentiment Analysis or other Microsoft AI services.
   - The Hard Route: Decide to figure out what's "related" on your own.
 
-`/pin <messageLink / messageID>`
-- This is a [Feature Request](https://github.com/Peashooter101/JaredVirtualMachine/issues/1)
-- The bot will push this message to a pin channel.
-- The bot will have to save the "pin channel" location in some useful way depending on the server.
+`Pin Message`
+- Add functionality to request or vote pin if you do not have permission.
+- Edit so the permissions extend to people who have the ability to pin messages too (duh... but it's late at night right now).
+- Figure out if there is a way to embed videos to these pinned embeds.
 
 ---
 
@@ -120,3 +126,7 @@ Wanna see some of the stuff without using the bot? :smile:
 `/valorant profile <user>`
 
 ![Valorant Profile Demo](https://github.com/Peashooter101/JaredVirtualMachine/blob/main/Demo%20Images/Valorant%20Profile%20Demo.png?raw=true)
+
+`Pin Message`
+
+![Pin Message Demo](https://github.com/Peashooter101/JaredVirtualMachine/blob/main/Demo%20Images/Pin%20Message%20Demo.png?raw=true)
