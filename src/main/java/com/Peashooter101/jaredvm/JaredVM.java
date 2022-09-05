@@ -52,8 +52,9 @@ public class JaredVM {
                                 new SubcommandData("profile", "Get the profile of the user!")
                                         .addOption(OptionType.STRING, "user", "Example: Peashooter101#7016", true),
                                 new SubcommandData("rank", "Get the ranked data of the user!")
-                                        .addOption(OptionType.STRING, "user", "Example: Peashooter101#7016", true)
-                        ))
+                                        .addOption(OptionType.STRING, "user", "Example: Peashooter101#7016", true)),
+                        Commands.message("Pin Message")
+                        )
                 .queue();
     }
 

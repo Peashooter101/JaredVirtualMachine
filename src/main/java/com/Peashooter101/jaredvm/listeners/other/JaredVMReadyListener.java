@@ -5,6 +5,7 @@ import com.Peashooter101.jaredvm.listeners.command.AbbyListener;
 import com.Peashooter101.jaredvm.listeners.command.CmdTestListener;
 import com.Peashooter101.jaredvm.listeners.command.VCInviteListener;
 import com.Peashooter101.jaredvm.listeners.command.ValorantListener;
+import com.Peashooter101.jaredvm.listeners.context.PinMessageListener;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -39,6 +40,7 @@ public class JaredVMReadyListener extends ListenerAdapter {
         JaredVM.getApi().addEventListener(new VCInviteListener());
         JaredVM.getApi().addEventListener(new AbbyListener());
         JaredVM.getApi().addEventListener(new ValorantListener());
+        JaredVM.getApi().addEventListener(new PinMessageListener());
     }
 
 }

@@ -73,8 +73,8 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- Build an executable JAR -->
             <plugin>
-                <!-- Build an executable JAR -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.0</version>
@@ -89,6 +89,14 @@
                             <mainClass>com.Peashooter101.jaredvm.JaredVM</mainClass>
                         </manifest>
                     </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
             <!-- For JUnit 5 -->
