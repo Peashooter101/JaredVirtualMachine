@@ -30,7 +30,6 @@ public class AbbyListener extends ListenerAdapter {
 
         event.deferReply().queue();
         getPicture(event);
-        // getVideo(event); TODO: Consider alternatives for sending video.
 
     }
 
@@ -51,30 +50,15 @@ public class AbbyListener extends ListenerAdapter {
 
         GitHubRepoItem item = items.get(new Random().nextInt(items.size()));
         String name = item.name.substring(0, item.name.indexOf("."));
+        if (item.name.contains(".mp4")) {
+            event.getHook().sendMessage("**" + name + "**\n> " + item.download_url).queue();
+            return;
+        }
         EmbedBuilder embed = new EmbedBuilder();
         embed.setTitle(name, null)
                 .setColor(new Color(0x00FFFF))
                 .setImage(item.download_url);
         event.getHook().editOriginalEmbeds(embed.build()).queue();
-
-    }
-
-    // TODO: Remove, is used for testing.
-    private void getVideo(SlashCommandInteractionEvent event) {
-
-        String videoUrl = "https://video.twimg.com/ext_tw_video/1566354175470063619/pu/vid/640x360/SOeQspDBugrN_nPn.mp4?tag=12";
-        MessageEmbed.VideoInfo video = new MessageEmbed.VideoInfo(videoUrl, 640, 360);
-        MessageEmbed.Provider provider = new MessageEmbed.Provider("FixTweet - ✨ Click to join our Discord Server", "https://discord.gg/6CQTTTkGaH");
-        MessageEmbed.AuthorInfo author = new MessageEmbed.AuthorInfo("good morning", "https://twitter.com/DPPt_Shitpost/status/1566354183208452099", null, null);
-        String description = "boop";
-        String url = "https://fxtwitter.com/DPPt_Shitpost/status/1566354183208452099";
-        String title = "CEO of Sinnoh \uD83C\uDF1F (@DPPt_Shitpost)";
-
-        MessageEmbed embed = new MessageEmbed(url, title, null, EmbedType.VIDEO, null, 11548729, null, provider, author, video, null, null, null);
-        logger.warn("Embed Type: " + embed.getType());
-        event.getHook().sendMessageEmbeds(embed).queue();
-        MessageBuilder messageBuilder = new MessageBuilder().setEmbeds(embed);
-        event.getHook().sendMessage(messageBuilder.build()).queue();
     }
 
 }
