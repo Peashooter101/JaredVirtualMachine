@@ -54,6 +54,7 @@ public class JaredVM {
                                 new SubcommandData("rank", "Get the ranked data of the user!")
                                         .addOption(OptionType.STRING, "user", "Example: Peashooter101#7016", true)),
                         Commands.message("Pin Message")
+                        // Commands.message("Evaluate Embed") // Used for testing and will be disabled normally.
                         )
                 .queue();
     }
