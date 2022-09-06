@@ -60,6 +60,7 @@
 
     <build>
         <plugins>
+            <!-- Shade dependencies -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -73,6 +74,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <!-- Build an executable JAR -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -91,6 +93,8 @@
                     </archive>
                 </configuration>
             </plugin>
+
+            <!-- For UTF-8 Encoding -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -99,6 +103,7 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+            
             <!-- For JUnit 5 -->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
