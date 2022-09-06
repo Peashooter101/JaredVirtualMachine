@@ -34,6 +34,8 @@ Oh also, the name "Jared Virtual Machine" is a play on Java Virtual Machine so y
 - We have a [friend](https://github.com/RhythmicSys) with a cute dog.
 - The command gives us easy access to Abby pictures.
 - The pictures are saved and pulled from this repository!
+- Supports `.mp4` videos, albeit not the way I want it.
+  - Sent as a normal message, not as an embed.
 
 `/valorant profile <valorantName>`
 - Fetches some data about the Valorant account.
@@ -55,8 +57,8 @@ Oh also, the name "Jared Virtual Machine" is a play on Java Virtual Machine so y
 - `/vc request` should be the same as `/vc invite` but they are requesting permission to join.
 - Make it look fancy using Embeds cause Embeds are cooler.
 
-`/abby <get/add/remove/gallery>`
-- Need more commands for usability without shutting down the bot!
+`/abby <search/gallery>`
+- Need commands to do other additional stuff.
 
 `/valorant <profile/rank/history/skins>`
 - For the account level, draw the level onto the border rather than using their "Level Tier" for the border.
@@ -108,6 +110,10 @@ Some experiments I have conducted...
 Some ideas I have...
 - Use Graphics to draw text onto a BufferedImage ([StackOverflow Reference](https://stackoverflow.com/questions/2658554/using-graphics2d-to-overlay-text-on-a-bufferedimage-and-return-a-bufferedimage)).
 - Use a database that gets routinely updated by the bot because I have too much data and too much object mapping going on.
+- Host a small web server to send HTML to force Discord to put videos into Embeds.
+  - All Discord embeds sent by bots are `EmbedType.RICH` and Rich Embeds cannot have a video in it.
+    - [Discord Support: Request Videos in Rich Embeds](https://support.discord.com/hc/en-us/community/posts/360037387352-Videos-in-Rich-Embeds)
+    - [Discord Developer Portal: Message Create Limitations](https://discord.com/developers/docs/resources/channel#create-message-limitations)
 
 ---
 
