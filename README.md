@@ -45,7 +45,7 @@ Oh also, the name "Jared Virtual Machine" is a play on Java Virtual Machine so y
 `Pin Message`
 - This was a [Feature Request](https://github.com/Peashooter101/JaredVirtualMachine/issues/1)
 - Accessed through the Context Menu (right-click Message).
-- Works only for indivdiuals with the Administrator Permission.
+- Works only for individuals with the Administrator Permission.
 - Sends to the top most text channel with a "📌" in its name.
 
 ---
@@ -87,11 +87,14 @@ Oh also, the name "Jared Virtual Machine" is a play on Java Virtual Machine so y
 - Edit so the permissions extend to people who have the ability to pin messages too (duh... but it's late at night right now).
 - Figure out if there is a way to embed videos to these pinned embeds.
 
+`/defenestrate <content>`
+- Throw them out a window.
+
 ---
 
 ### Experimentation
 
-I created a little playground to keep track of some of the experiments I am conducting in relation to this project. Think of it as a place for me to store my practice runs without having to force the bot to run. Some of the early experimentation may not be present in the Experimentation Package since I made this a few weeks after initially starting the project.
+I created a little playground to keep track of some experiments I am conducting in relation to this project. Think of it as a place for me to store my practice runs without having to force the bot to run. Some of the early experimentation may not be present in the Experimentation Package since I made this a few weeks after initially starting the project.
 
 You can find the [Experimentation Package here](https://github.com/Peashooter101/JaredVirtualMachine/tree/main/src/test/java/experimentation).
 
@@ -99,16 +102,21 @@ You can find the [Experimentation Package here](https://github.com/Peashooter101
 > 
 > This is meant to be a playground and will not be updated for any reason outside of me doing random tests.
 > 
-> It is under the `test` directory but it is located within `experimentation` because I am not trying to test the application.
+> It is under the `test` directory, but it is located within `experimentation` because I am not trying to test the application.
+> 
+> Files used as a part of experimentation are included in `JaredVM_data/Experimentation`.
 
 Some experiments I have conducted...
 - Using HttpRequest, HttpResponse, and HttpClient for GET/POST requests.
 - Using Jackson API to map JSON into Objects.
 - Merging, scaling, and modifying images using BufferedImage and Graphics ([OverlayImagesExp.java](https://github.com/Peashooter101/JaredVirtualMachine/blob/main/src/test/java/experimentation/OverlayImagesTest.java)).
 - Converting a BufferedImage into a Base64 String and sending that info up to Imgur ([ImgurUploadTest.java](https://github.com/Peashooter101/JaredVirtualMachine/blob/main/src/test/java/experimentation/ImgurUploadTest.java)).
+- Pull apart a GIF and overlay text onto it ([TextOnGifTest.java](https://github.com/Peashooter101/JaredVirtualMachine/blob/main/src/test/java/experimentation/TextOnGifTest.java)).
 
 Some ideas I have...
 - Use Graphics to draw text onto a BufferedImage ([StackOverflow Reference](https://stackoverflow.com/questions/2658554/using-graphics2d-to-overlay-text-on-a-bufferedimage-and-return-a-bufferedimage)).
+  - Pull each frame out of a GIF ([StackOverflow Reference](https://stackoverflow.com/questions/8933893/convert-each-animated-gif-frame-to-a-separate-bufferedimage)).
+  - Saving GIF with ImageIO ([StackOverflow Reference](https://stackoverflow.com/questions/777947/creating-animated-gif-with-imageio)).
 - Use a database that gets routinely updated by the bot because I have too much data and too much object mapping going on.
 - Host a small web server to send HTML to force Discord to put videos into Embeds.
   - All Discord embeds sent by bots are `EmbedType.RICH` and Rich Embeds cannot have a video in it.
