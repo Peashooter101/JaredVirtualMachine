@@ -43,7 +43,7 @@ Oh also, the name "Jared Virtual Machine" is a play on Java Virtual Machine so y
 - Special Thanks to [Henrik](https://docs.henrikdev.xyz/) for their Valorant API.
 
 `Pin Message`
-- This was a [Feature Request](https://github.com/Peashooter101/JaredVirtualMachine/issues/1)
+- This was a [Feature Request](https://github.com/Peashooter101/JaredVirtualMachine/issues/1).
 - Accessed through the Context Menu (right-click Message).
 - Works only for individuals with the Administrator Permission.
 - Sends to the top most text channel with a "📌" in its name.
@@ -86,6 +86,7 @@ Oh also, the name "Jared Virtual Machine" is a play on Java Virtual Machine so y
 - Add functionality to request or vote pin if you do not have permission.
 - Edit so the permissions extend to people who have the ability to pin messages too (duh... but it's late at night right now).
 - Figure out if there is a way to embed videos to these pinned embeds.
+- Allow links that direct to an image to put the image into the Embed Image ([Feature Request](https://github.com/Peashooter101/JaredVirtualMachine/issues/3)).
 
 `/defenestrate <content>`
 - Throw them out a window.
