@@ -104,8 +104,6 @@ You can find the [Experimentation Package here](https://github.com/Peashooter101
 > This is meant to be a playground and will not be updated for any reason outside of me doing random tests.
 > 
 > It is under the `test` directory, but it is located within `experimentation` because I am not trying to test the application.
-> 
-> Files used as a part of experimentation are included in `JaredVM_data/Experimentation`.
 
 Some experiments I have conducted...
 - Using HttpRequest, HttpResponse, and HttpClient for GET/POST requests.
