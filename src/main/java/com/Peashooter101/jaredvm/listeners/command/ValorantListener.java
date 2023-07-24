@@ -10,7 +10,8 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.requests.restaction.WebhookMessageUpdateAction;
+import net.dv8tion.jda.api.requests.restaction.WebhookMessageEditAction;
+import net.dv8tion.jda.api.utils.FileUpload;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,8 +113,8 @@ public class ValorantListener extends ListenerAdapter {
         ValorantRank rankData = getRank(profile.puuid, profile.region);
         if (rankData == null) {
             embed.addField("Rank: ", "Cannot be loaded.", true);
-            WebhookMessageUpdateAction<Message> action = event.getHook().editOriginalEmbeds(embed.build());
-            if (thumbnail != null) { action = action.addFile(thumbnail, "thumbnail.png"); }
+            WebhookMessageEditAction<Message> action = event.getHook().editOriginalEmbeds(embed.build());
+            if (thumbnail != null) { action = action.setFiles(FileUpload.fromData(thumbnail, "thumbnail.png")); }
             action.queue();
             return;
         }
@@ -128,9 +129,9 @@ public class ValorantListener extends ListenerAdapter {
             embed.setImage("attachment://footer.png");
         }
 
-        WebhookMessageUpdateAction<Message> action = event.getHook().editOriginalEmbeds(embed.build());
-        if (thumbnail != null) { action = action.addFile(thumbnail, "thumbnail.png"); }
-        if (image != null) { action = action.addFile(image, "footer.png"); }
+        WebhookMessageEditAction<Message> action = event.getHook().editOriginalEmbeds(embed.build());
+        if (thumbnail != null) { action = action.setFiles(FileUpload.fromData(thumbnail, "thumbnail.png")); }
+        if (image != null) { action = action.setFiles(FileUpload.fromData(image, "footer.png")); }
         action.queue();
     }
 

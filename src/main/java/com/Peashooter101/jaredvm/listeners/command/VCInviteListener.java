@@ -1,6 +1,7 @@
 package com.Peashooter101.jaredvm.listeners.command;
 
 import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -11,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collections;
 import java.util.HashMap;
 
 public class VCInviteListener extends ListenerAdapter {
@@ -142,7 +144,7 @@ public class VCInviteListener extends ListenerAdapter {
         // If the request timed out...
         if (timeElapsed > INVITE_TIMEOUT) {
             String response = "Oops sorry " + event.getUser().getAsMention() + ", your request timed out! Ask for another one from " + request.inviter.getUser().getName();
-            event.editMessage(response).setActionRows().queue();
+            event.editMessage(response).setActionRow(Collections.emptyList()).queue();
             logger.debug(request.inviter.getUser().getName() + " issued command but failed: Invite expired (" + request.inviter.getUser().getName() + " -> " + member.getUser().getName() + " for " + request.channel.getName() + ").");
             vcRequests.remove(member);
             return;
@@ -151,7 +153,7 @@ public class VCInviteListener extends ListenerAdapter {
         // If denied...
         if (event.getComponentId().equals("vc-invite-deny")) {
             String response = "Hey " + request.inviter.getAsMention() + ", " + member.getUser().getName() + " has denied your request to join " + request.channel.getName() + "!";
-            event.editMessage(response).setActionRows().queue();
+            event.editMessage(response).setActionRow(Collections.emptyList()).queue();
             logger.debug(request.inviter.getUser().getName() + " issued command but failed: Invite Denied (" + request.inviter.getUser().getName() + " -> " + member.getUser().getName() + " for " + request.channel.getName() + ").");
             vcRequests.remove(member);
             return;
@@ -162,7 +164,7 @@ public class VCInviteListener extends ListenerAdapter {
         // TODO: Check if the channel is full and if the user can bypass it.
         if (isInVC(member) == null) {
             String response = "Hey " + request.inviter.getAsMention() + ", " + member.getUser().getName() + " was in a voice chat but is no longer in any voice chat.";
-            event.editMessage(response).setActionRows().queue();
+            event.editMessage(response).setActionRow(Collections.emptyList()).queue();
             logger.debug(event.getUser().getName() + " accepted invite from " + request.inviter.getUser().getName() + " to " + request.channel.getName() + " but was no longer in a Voice Channel.");
             vcRequests.remove(member);
             return;
@@ -171,7 +173,7 @@ public class VCInviteListener extends ListenerAdapter {
 
         logger.debug(event.getUser().getName() + " accepted invite from " + request.inviter.getUser().getName() + " to " + request.channel.getName());
         String response = "Hey " + request.inviter.getUser().getName() + ", I moved " + member.getUser().getName() + " into " + request.channel.getName();
-        event.editMessage(response).setActionRows().queue();
+        event.editMessage(response).setActionRow(Collections.emptyList()).queue();
 
         vcRequests.remove(member);
     }
