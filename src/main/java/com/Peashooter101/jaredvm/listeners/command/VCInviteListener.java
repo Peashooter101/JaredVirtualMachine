@@ -82,7 +82,7 @@ public class VCInviteListener extends ListenerAdapter {
             return;
         }
 
-        if (inviteeVC.equals(inviterVC)) {
+        if (inviterVC.equals(inviteeVC)) {
             String response = "Hey " + inviter.getAsMention() + ", you are already in a Voice Channel with them.";
             event.reply(response).setEphemeral(true).queue();
             logger.debug(event.getUser().getName() + " issued command but failed: Both members are already in the same Voice Channel (" + invitee.getUser().getName() + ", " + inviterVC.getName() + ").");
@@ -159,6 +159,13 @@ public class VCInviteListener extends ListenerAdapter {
 
         // If accepted...
         Guild guild = request.channel.getGuild();
+        if (isInVC(member) == null) {
+            String response = "Hey " + request.inviter.getAsMention() + ", " + member.getUser().getName() + " was in a voice chat but is no longer in any voice chat.";
+            event.editMessage(response).setActionRows().queue();
+            logger.debug(event.getUser().getName() + " accepted invite from " + request.inviter.getUser().getName() + " to " + request.channel.getName() + " but was no longer in a Voice Channel.");
+            vcRequests.remove(member);
+            return;
+        }
         guild.moveVoiceMember(member, request.channel).queue();
 
         logger.debug(event.getUser().getName() + " accepted invite from " + request.inviter.getUser().getName() + " to " + request.channel.getName());
