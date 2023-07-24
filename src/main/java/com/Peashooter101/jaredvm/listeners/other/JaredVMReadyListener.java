@@ -2,16 +2,12 @@ package com.Peashooter101.jaredvm.listeners.other;
 
 import com.Peashooter101.jaredvm.JaredVM;
 import com.Peashooter101.jaredvm.listeners.command.AbbyListener;
-import com.Peashooter101.jaredvm.listeners.command.CmdTestListener;
 import com.Peashooter101.jaredvm.listeners.command.VCInviteListener;
 import com.Peashooter101.jaredvm.listeners.command.ValorantListener;
-import com.Peashooter101.jaredvm.listeners.context.EvaluateEmbedListener;
 import com.Peashooter101.jaredvm.listeners.context.PinMessageListener;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.interactions.commands.OptionType;
-import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.utils.cache.SnowflakeCacheView;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -42,6 +38,7 @@ public class JaredVMReadyListener extends ListenerAdapter {
         JaredVM.getApi().addEventListener(new AbbyListener());
         JaredVM.getApi().addEventListener(new ValorantListener());
         JaredVM.getApi().addEventListener(new PinMessageListener());
+        JaredVM.getApi().addEventListener(new JaredVMJoinListener());
         // JaredVM.getApi().addEventListener(new EvaluateEmbedListener()); // Used for testing and will be disabled normally.
     }
 

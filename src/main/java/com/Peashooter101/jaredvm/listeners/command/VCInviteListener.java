@@ -159,6 +159,7 @@ public class VCInviteListener extends ListenerAdapter {
 
         // If accepted...
         Guild guild = request.channel.getGuild();
+        // TODO: Check if the channel is full and if the user can bypass it.
         if (isInVC(member) == null) {
             String response = "Hey " + request.inviter.getAsMention() + ", " + member.getUser().getName() + " was in a voice chat but is no longer in any voice chat.";
             event.editMessage(response).setActionRows().queue();

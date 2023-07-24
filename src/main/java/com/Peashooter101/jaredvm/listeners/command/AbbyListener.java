@@ -3,16 +3,12 @@ package com.Peashooter101.jaredvm.listeners.command;
 import com.Peashooter101.jaredvm.utility.github.GitHubRepoItem;
 import com.Peashooter101.jaredvm.utility.github.GitHubUtil;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.MessageBuilder;
-import net.dv8tion.jda.api.entities.EmbedType;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Random;
 

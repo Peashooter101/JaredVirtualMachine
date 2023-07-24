@@ -18,18 +18,11 @@ public class JaredVM {
 
     public static void main(String[] arguments) {
 
-        try {
-            api = JDABuilder.create(AuthHandler.getBotToken(),
+        api = JDABuilder.create(AuthHandler.getBotToken(),
                     GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MEMBERS,
                     GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_EMOJIS_AND_STICKERS,
                     GatewayIntent.GUILD_PRESENCES
             ).build();
-        }
-        catch (LoginException e) {
-            e.printStackTrace();
-            System.out.println("Failed to login, exiting...");
-            return;
-        }
 
         api.addEventListener(new PingPongListener());
         api.addEventListener(new JaredVMReadyListener());
