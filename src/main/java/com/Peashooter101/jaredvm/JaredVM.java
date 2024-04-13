@@ -1,5 +1,6 @@
 package com.Peashooter101.jaredvm;
 
+import com.Peashooter101.jaredvm.listeners.message.JesusBotShortsLinkFixer;
 import com.Peashooter101.jaredvm.listeners.message.PingPongListener;
 import com.Peashooter101.jaredvm.listeners.other.JaredVMReadyListener;
 import com.Peashooter101.jaredvm.utility.AuthHandler;
@@ -32,6 +33,7 @@ public class JaredVM {
         }
 
         api.addEventListener(new PingPongListener());
+        api.addEventListener(new JesusBotShortsLinkFixer());
         api.addEventListener(new JaredVMReadyListener());
 
     }
